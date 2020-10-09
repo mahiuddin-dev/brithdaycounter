@@ -21,14 +21,9 @@ if(isset($_REQUEST["userinput"])){
     $cmonth = date("m");
     $Cday = date("d");
 
-    $myday = 0;
-    $mymonth = 0;
-
-
-    $resultday;
-    $resultMonth;
-    $resultYear;
-
+    $incressDay = 0;
+    $incressMonth = 0;
+    
     // day condition
     if($Cday > $uday){
         $resultday = $Cday - $uday;
@@ -37,40 +32,40 @@ if(isset($_REQUEST["userinput"])){
     }else{
         $resultday = ($Cday+$monthArray[$umonth-1]) - $uday;
         for ($i=0; $i < 1; $i++) { 
-            $myday++;
+            $incressDay++;
         }
     }
 
     // month calculation
     if($cmonth > $umonth){
-        if($myday == 1){
+        if($incressDay == 1){
             $resultMonth = ($cmonth - 1) - $umonth; 
         }else{
             $resultMonth = $cmonth - $umonth;
         }
     }else if($umonth == $cmonth){
-        if($myday == 1){
+        if($incressDay == 1){
             $resultMonth = ($cmonth+12-1) - $umonth;
             for ($i=0; $i < 1; $i++) { 
-                $mymonth++;
+                $incressMonth++;
             }
         }else{
             $resultMonth = $cmonth - $umonth;
         }
     }else{
-        if($myday == 1){
+        if($incressDay == 1){
             $resultMonth = ($cmonth+12-1) - $umonth;
         }else{
             $resultMonth = ($cmonth+12) - $umonth;
         }
         for ($i=0; $i < 1; $i++) { 
-            $mymonth++;
+            $incressMonth++;
         }
     }
 
     // year calculation
     if($cyear > $uyear){
-        if($mymonth == 1){
+        if($incressMonth == 1){
             $resultYear = ($cyear - 1) - $uyear; 
         }else{
             $resultYear = $cyear - $uyear;
@@ -79,8 +74,27 @@ if(isset($_REQUEST["userinput"])){
         $resultYear = $cyear - $uyear;
     }
 
-    echo  $resultYear." Year ".$resultMonth." Month ".$resultday." Day";
-
+    // Year, Years, Month, Months, Day, Days decided
+    if($resultYear <= 1){
+        $finalyear = $resultYear." Year, ";
+    }else{
+        $finalyear = $resultYear." Years, ";
     }
+
+    if($resultMonth <= 1){
+        $finalMonth = $resultMonth." Month, ";
+    }else{
+        $finalMonth = $resultMonth." Months, ";
+    }
+
+    if($resultday <= 1){
+        $finalDay = $resultday." Day ";
+    }else{
+        $finalDay = $resultday." Days ";
+    }
+
+    echo  $finalyear.$finalMonth.$finalDay;
+
+}
 
 ?>
